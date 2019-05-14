@@ -2,7 +2,7 @@
   "name": "lk-test",
   "main": "lib.js",
   "bin": {
-    "lk-test": "node run.js"
+    "lk-test": "run.js"
   },
   "dependencies": {
     "glob": "^7.1.4"
