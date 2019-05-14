@@ -6,7 +6,7 @@ const getGlobalTestPromises = () => globalTestPromises;
 
 const testAll = async (testFuncs, filename) => {
   const relativePath = path.relative(process.cwd(), filename);
-  console.log('starting:', clc.blue(testFuncs.map(testFunc => testFunc.name).join(' ')));
+  console.log(clc.blue('starting: ' + testFuncs.map(testFunc => testFunc.name).join(' ')));
   const testPromises = testFuncs.map(async testFunc => {
     try {
       await testFunc();
@@ -16,11 +16,14 @@ const testAll = async (testFuncs, filename) => {
       return { type: 'failure', testName: testFunc.name }
     }
   });
-  globalTestPromises = globalTestPromises.concat(testPromises);
-  const testResults = await Promise.all(testPromises);
-  const successes = testResults.filter(testResult => testResult.type === 'success');
-  const failures = testResults.filter(testResult => testResult.type === 'failure');
-  console.log(clc.yellow(`${relativePath} => Success: ${successes.length}, Failure: ${failures.length}`));
+  const testResultPrintedPromise = new Promise(async res => {
+    const testResults = await Promise.all(testPromises);
+    const successes = testResults.filter(testResult => testResult.type === 'success');
+    const failures = testResults.filter(testResult => testResult.type === 'failure');
+    console.log(clc.yellow(`${relativePath} => Success: ${successes.length}, Failure: ${failures.length}`));
+    res(testResults);
+  });
+  globalTestPromises = globalTestPromises.concat(testResultPrintedPromise);
 };
 
 const test = (estFuncName = testFunc.name, testFunc) => testAll([testFunc], [testFuncName]);
