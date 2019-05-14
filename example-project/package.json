@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lk-test": "^1.3.0"
+    "lk-test": "^1.3.2"
   }
 }
