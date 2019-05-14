@@ -1,0 +1,14 @@
+{
+  "name": "example-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lk-test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lk-test": "^1.1.0"
+  }
+}
