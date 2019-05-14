@@ -1,0 +1,32 @@
+{
+  "name": "lk-test",
+  "main": "lib.js",
+  "bin": {
+    "lk-test": "node run.js"
+  },
+  "dependencies": {
+    "glob": "^7.1.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  },
+  "version": "1.0.1",
+  "description": "An alarmingly simple test running.",
+  "scripts": {
+    "test": "node run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lukekaalim/lk-test.git"
+  },
+  "keywords": [
+    "test",
+    "node"
+  ],
+  "author": "luke kaalim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukekaalim/lk-test/issues"
+  },
+  "homepage": "https://github.com/lukekaalim/lk-test#readme"
+}
