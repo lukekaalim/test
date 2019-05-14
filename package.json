@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "cli-color": "^1.4.0",
+    "esm": "^3.2.22",
     "glob": "^7.1.4"
   },
   "devDependencies": {
