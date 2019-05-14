@@ -30,7 +30,8 @@ npx lk-test
 ```
 This will look for every `**/*.test.js` file it can find in the current directory, and run them.
 ### Watching
-Not included. Use `watch` or `make` if you care.
+Not included. Use `watch -c` or `make` if you care.
 ```bash
-watch npx lk-test
+watch -c npx lk-test
 ```
+(The `-c` is for color)
