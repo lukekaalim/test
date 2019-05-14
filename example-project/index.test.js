@@ -1,4 +1,4 @@
-const { equal, notEqual } = require('assert');
+const { equal } = require('assert');
 const { testAll } = require('lk-test');
 const { createCave } = require('../example-project');
 
