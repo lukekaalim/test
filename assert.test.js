@@ -13,4 +13,4 @@ const okWorks = () => {
   ok(true);
 };
 
-testAll([equalityWorks, throwWorks, okWorks]);
+testAll([equalityWorks, throwWorks, okWorks], __filename);

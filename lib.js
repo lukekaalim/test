@@ -1,37 +1,23 @@
-let globalFailures = [];
-let globalSuccesses = [];
-let isPrintingToConsole = true;
+const path = require('path');
+const clc = require('cli-color');
 
-const suppressConsole = () => {
-  isPrintingToConsole = false;
-};
-
-const getGlobalStats = () => ({
-  globalFailures,
-  globalSuccesses,
-});
-
-const testAll = async (testFuncs, testFuncNames = []) => {
+const testAll = async (testFuncs, filename) => {
+  const relativePath = path.relative(process.cwd(), filename);
   const failures = [];
   const successes = [];
-  const results = await Promise.all(testFuncs.map(async testFunc => {
+  await Promise.all(testFuncs.map(async testFunc => {
     try {
       await testFunc();
       successes.push(testFunc.name);
     } catch (error) {
-      isPrintingToConsole && console.error(error);
+      console.error(clc.red(relativePath + ' => ' + error.stack));
       failures.push(error);
     }
   }));
-  globalSuccesses = globalSuccesses.concat(successes);
-  globalFailures = globalFailures.concat(failures);
-  isPrintingToConsole && console.log(`${__filename}: Success: ${successes.length}, Failure: ${failures.length}`);
+  console.log(clc.yellow(`${relativePath} => Success: ${successes.length}, Failure: ${failures.length}`));
 };
 
 const test = (estFuncName = testFunc.name, testFunc) => testAll([testFunc], [testFuncName]);
 
 exports.test = test;
 exports.testAll = testAll;
-// For outputting
-exports.suppressConsole = suppressConsole;
-exports.getGlobalStats = getGlobalStats;

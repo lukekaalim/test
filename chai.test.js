@@ -9,4 +9,8 @@ const throwingWorks = () => {
   expect(() => { throw new Error('Expected Failure') }).to.throw('Expected Failure');
 };
 
-testAll([equalityWorks, throwingWorks]);
+const realError = () => {
+  throw new Error('Raarrggghh!!');
+}
+
+testAll([equalityWorks, throwingWorks, realError], __filename);

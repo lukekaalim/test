@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 
 const glob = require('glob').sync;
-const path = require('path');
+const clc = require('cli-color');
 
-const run = async () => {
-  const testingGlob = path.resolve(path.dirname(process.argv0), '**/*.test.js');
-  const testFiles = glob(testingGlob);
+const run = () => {
+  const testingGlob = [process.cwd(), '**/*.test.js'].join('/');
+  console.log(clc.yellow(`Looking for ${testingGlob}`));
+  
+  const testFiles = glob(testingGlob)
+    .filter(testFile => !testFile.includes('node_modules'));
+
+  console.log(clc.green(`Found ${testFiles.length} tests`));
   testFiles.map(testFile => require(testFile));
 };
 

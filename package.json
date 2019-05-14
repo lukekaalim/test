@@ -5,6 +5,7 @@
     "lk-test": "run.js"
   },
   "dependencies": {
+    "cli-color": "^1.4.0",
     "glob": "^7.1.4"
   },
   "devDependencies": {
