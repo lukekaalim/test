@@ -21,7 +21,7 @@ const onePlusOneShouldEqualTwo = () => {
   equals(1 + 1, 2);
 };
 
-testAll([onePlusOneShouldEqualTwo]);
+testAll([onePlusOneShouldEqualTwo], __filename);
 
 ```
 ### Run
