@@ -11,7 +11,13 @@ const run = () => {
     .filter(testFile => !testFile.includes('node_modules'));
 
   console.log(clc.green(`Found ${testFiles.length} tests`));
-  testFiles.map(testFile => require(testFile));
+  testFiles.map(testFile => {
+    try {
+      require(testFile)
+    } catch (error) {
+      console.error(clc.red(testFile + ' => ' + error.stack));
+    }
+  });
 };
 
 if (require.main === module) {
