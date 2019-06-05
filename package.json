@@ -2,11 +2,11 @@
   "name": "lk-test",
   "main": "dist/lk-test.cjs.js",
   "module": "dist/lk-test.esm.js",
-  "bin": {
-    "lk-test": "src"
-  },
   "dependencies": {
     "colors-cli": "^1.0.23"
+  },
+  "scripts": {
+    "test": "node -r esm src/index.test.js"
   },
   "devDependencies": {
     "esm": "^3.2.25",
