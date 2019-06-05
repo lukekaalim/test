@@ -1,5 +1,5 @@
 import { createTestSuite, createTest } from '../src';
-import { equal, notEqual, throws, not } from './assertions';
+import { equal, notEqual, throws, not, safe } from './assertions';
 
 const basicEquality = createTest('basicEquality', () => {
   return [
@@ -20,7 +20,15 @@ const inverseThrow = createTest('inverseThrow', () => {
   ];
 });
 
-const assertionTestSuite =  createTestSuite([basicEquality, longWait, inverseThrow], 'src/assertions.test.js');
+const safeCheck = createTest('safeCheck', () => {
+  const object = {};
+
+  return [
+    not(safe(() => equals(object.property.wont.exist, null))),
+  ];
+});
+
+const assertionTestSuite =  createTestSuite([basicEquality, longWait, inverseThrow, safeCheck], 'src/assertions.test.js');
 
 export {
   assertionTestSuite,

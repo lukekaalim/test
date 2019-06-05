@@ -12,6 +12,13 @@ const throws = (a) => {
   }
 }
 const not = (a) => createAssertion(`not ${a.name}`, a.result === 'fail' ? 'pass' : 'fail', `Inverse of: ${a.message}`);
+const safe = (a) => {
+  try {
+    return a();
+  } catch (error) {
+    return createAssertion(`safe function threw ${error.name || error.message}`, 'fail', error.stack);
+  }
+}
 
 export {
   not,
@@ -19,4 +26,5 @@ export {
   notEqual,
   ok,
   throws,
+  safe,
 };
