@@ -1,6 +1,8 @@
 # `lk-test`
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
+[Documentation.md](/docs.md)
+
 ## Why
 - I like things that aren't complex.
 - I starting node programs by running something like `node src/basicMath.test.js` instead of special commands.
@@ -19,7 +21,7 @@ or
 ```bash
 yarn add -D lk-test
 ```
-## Usage
+## Guide
 Make some test files.
 ```bash
 src/basicMath.test.js
