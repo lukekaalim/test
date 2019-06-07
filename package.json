@@ -14,7 +14,7 @@
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-node-resolve": "^5.0.1"
   },
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "An alarmingly simple test running.",
   "repository": {
     "type": "git",
