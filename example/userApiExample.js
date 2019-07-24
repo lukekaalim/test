@@ -1,54 +1,36 @@
 // @flow
 
-const expect = (expectedAssertion, getChildExpectations) => {
-  const test = async () => {
-    const childExpectations = await getChildExpectations();
-    const childAssertions = await Promise.all(childExpectations.map(ex => ex.test()));
-
-    const isValid = childAssertions.every(assertion => assertion.isValid);
-
-    return {
-      actualAssertion: isValid ? expectedAssertion : childAssertions.find(assertion => !assertion.isValid).actualAssertion,
-      isValid,
-    };
-  };
-
-  return {
-    test,
-  };
+/*::
+type Assertion = {
+  description: string,
+  validatesExpectation: boolean,
 };
 
-const expectTrue = (expectedAssertion, testExpectation) => {
-  const test = () => {
-    const isValid = testExpectation();
-    return {
-      actualAssertion: expectedAssertion,
-      isValid,
-    };
-  };
+type Expectation = {
+  description: string,
+  test: () => Promise<Array<Assertion>>,
+}
+*/
 
-  return {
-    test,
-  }
-};
+const createAssertion = (
+  description/*: string*/,
+  validatesExpectation/*: boolean*/,
+)/*: Assertion*/ => ({
+  description,
+  validatesExpectation,
+});
 
-const expectToReject = (functionToReject) => {
+const createExpectation = (
+  description/*: string*/,
+  testExpectation/*: () => Promise<Array<Assertion>>*/,
+)/*: Expectation*/ => {
   const test = async () => {
-    try {
-      await functionToReject();
-      return {
-        actualAssertion: 'Didnt Reject',
-        isValid: false,
-      };
-    } catch (error) {
-      return {
-        actualAssertion: 'Rejected',
-        isValid: true,
-      };
-    }
+    const assertions = await testExpectation();
+    return assertions;
   };
 
   return {
+    description,
     test,
   };
 };
@@ -68,53 +50,56 @@ const createApi = (statuses) => {
 };
 
 const createClient = (api) => {
-  const getVideoStatus = async (requestId) => {
+  const getVideoStatus = (requestId) => new Promise((resolve, reject) => {
     const status = api.getVideoStatus(requestId);
     if (!status) {
-      throw new Error('WRAARR!');
+      return reject(new Error('RRRAWWWRR!!'));
     }
-    return status;
-  };
+    return resolve(status);
+  });
 
   return {
     getVideoStatus,
   };
 };
 
-const expectProgressToEqual = (a, b) => expectTrue('progress to equal', () => (
-  a.progress === b.progress
-));
-const expectIdToEqual = (a, b) => expectTrue('episodeId to equal', () => (
-  a.id === b.id
-));
+const expectProgressToEqual = (a, b) => createAssertion('progress are to be equals', a.progress === b.progress);
+const expectIdToEqual = (a, b) => createAssertion('id are to be equals', a.id === b.id);
+const invertPromise = async (promise) => await new Promise((resolve, reject) => {
+  console.log(promise);
+  promise.catch(err => console.log('CAUGHT PROMISE') || resolve(err));
+  promise.then(() => console.log('WHY THEN'));
+  console.log('CATCH IS IN PLACE');
+});
 
-const userApiClientTest = expect('User API Client to connect with a User API instance', () => {
+const clientResovlesWithStatus = createExpectation('getVideoStatus() to give a Video Status from the specified episode', async () => {
   const apiVideoStatus = createVideoStatus('123', '10000');
   const api = createApi([apiVideoStatus]);
+  const client = createClient(api);
+
+  const videoStatus = await client.getVideoStatus(apiVideoStatus.id);
 
   return [
-    expect('getVideoStatus() to give a Video Status from the specified episode', async () => {
-      const client = createClient(api);
+    expectProgressToEqual(videoStatus, apiVideoStatus),
+    expectIdToEqual(videoStatus, apiVideoStatus),
+  ];
+});
 
-      const videoStatus = await client.getVideoStatus(apiVideoStatus.id);
+const clientThrowsWhenMissing = createExpectation('getVideoStatus() to throw an error if the episode does not exist', async () => {
+  const apiVideoStatus = createVideoStatus('123', '10000');
+  const api = createApi([apiVideoStatus]);
+  const client = createClient(api);
 
-      return [
-        expectProgressToEqual(videoStatus, apiVideoStatus),
-        expectIdToEqual(videoStatus, apiVideoStatus),
-      ];
-    }),
-    expect('getVideoStatus() to throw if the specified ID isnt in the api', async () => {
-      const client = createClient(api);
+  const error = await new Promise(res => client.getVideoStatus('a-fake-id').catch(res));
 
-      return [
-        expectToReject(() => client.getVideoStatus('a-fake-id')),
-      ];
-    }),
+  return [
+    createAssertion('error is to exist', !!error),
   ];
 });
 
 const main = async () => {
-  console.log(await userApiClientTest.test());
+  console.log(clientResovlesWithStatus.description, await clientResovlesWithStatus.test());
+  console.log(clientThrowsWhenMissing.description, await clientThrowsWhenMissing.test());
 };
 
 main();
