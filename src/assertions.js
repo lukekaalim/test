@@ -1,31 +1,15 @@
 // @flow strict
 import { createAssertion } from './lib';
+/*::
+import type { Assertion } from './lib';
+*/
 
-const equal = (a, b) => createAssertion('equal', a === b ? 'pass' : 'fail', a === b ? `${a} === ${b}` : `${a} === ${b}`);
-const notEqual = (a, b) => createAssertion('notEqual', a !== b ? 'pass' : 'fail', a !== b ? `${a} !== ${b}` : `${a} === ${b}`);
-const ok = (a) => createAssertion('ok', a ? 'pass' : 'fail', a ? `${a} is truthy` : `${a} wasn't truthy`);
-const throws = (a) => {
-  try {
-    a();
-    return createAssertion('throws', 'fail' , `${a.name} didn't throw an error`);
-  } catch (error) {
-    return createAssertion('throws', 'pass', `${a.name} threw ${error.name || error.message}`);
-  }
-}
-const not = (a) => createAssertion(`not ${a.name}`, a.result === 'fail' ? 'pass' : 'fail', `Inverse of: ${a.message}`);
-const safe = (a) => {
-  try {
-    return a();
-  } catch (error) {
-    return createAssertion(`safe function threw ${error.name || error.message}`, 'fail', error.stack);
-  }
-}
+export const expectEquality = (...values/*: Array<mixed>*/) => createAssertion(
+  'values are equal',
+  values ? values.every((value, index) => index === 0 || value === values[index - 1]) : true,
+);
 
-export {
-  not,
-  equal,
-  notEqual,
-  ok,
-  throws,
-  safe,
-};
+export const not = (assertion/*: Assertion*/) => createAssertion(
+  'opposite of: ' + assertion.description,
+  !assertion.validatesExpectation,
+);

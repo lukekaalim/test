@@ -1,35 +1,39 @@
-import { createTestSuite, createTest } from '../src';
-import { equal, notEqual, throws, not, safe } from './assertions';
+// @flow
+const { expectEquality, not, createAssertion, createExpectation } = require('../dist/lk-test.cjs');
 
-const basicEquality = createTest('basicEquality', () => {
-  return [
-    notEqual(1, 2),
-    equal(1, 1),
-    equal(2, 2),
-  ];
-});
+const assertionExpectations = [
+  createExpectation('Zero values are equal', async () => [
+    expectEquality(),
+  ]),
+  createExpectation('One value are equal', async () => [
+    expectEquality(1),
+    expectEquality(false),
+    expectEquality(null),
+    expectEquality('none'),
+  ]),
+  createExpectation('Two values are equal if they strictly equal', async () => [
+    expectEquality(1, 1),
+    expectEquality(3, 3),
+    expectEquality('3', '3'),
+    expectEquality(false, false),
+    not(expectEquality(false, true)),
+    not(expectEquality(3, 6)),
+    not(expectEquality(3, '3')),
+    not(expectEquality({}, {})),
+    not(expectEquality([], [])),
+  ]),
+  createExpectation('Three values are equal if they strictly equal', async () => [
+    expectEquality(1, 1, 1),
+    expectEquality(31, 31, 31),
+    not(expectEquality(1, 2, 3)),
+    not(expectEquality(2, 2, 3)),
+    not(expectEquality(2, 3, 3)),
+    not(expectEquality(1, 1, 3)),
+    not(expectEquality(1, 2, 1)),
+  ]),
+  createExpectation('many values are equal if they strictly equal', async () => [
+    expectEquality(10, 10, 10, 10, 10, 10, 10, 10, 10, 10),
+  ]),
+];
 
-const longWait = createTest('longWait', async () => {
-  await new Promise(res => setTimeout(res, 10));
-});
-
-const inverseThrow = createTest('inverseThrow', () => {
-  return [
-    throws(() => { throw new Error('Example Test Error')}),
-    not(throws(function wontThrowAnError() { })),
-  ];
-});
-
-const safeCheck = createTest('safeCheck', () => {
-  const object = {};
-
-  return [
-    not(safe(() => equals(object.property.wont.exist, null))),
-  ];
-});
-
-const assertionTestSuite =  createTestSuite([basicEquality, longWait, inverseThrow, safeCheck], 'src/assertions.test.js');
-
-export {
-  assertionTestSuite,
-};
+module.exports.assertionExpectations = assertionExpectations;

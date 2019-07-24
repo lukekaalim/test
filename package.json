@@ -3,17 +3,16 @@
   "main": "dist/lk-test.cjs.js",
   "module": "dist/lk-test.esm.js",
   "dependencies": {
-    "colors-cli": "^1.0.23",
-    "rollup-plugin-flow-entry": "^0.3.1"
+    "colors-cli": "^1.0.23"
   },
   "scripts": {
-    "test": "node -r esm src/index.test.js"
+    "test": "node test.js"
   },
   "devDependencies": {
-    "esm": "^3.2.25",
     "rollup": "^1.13.1",
     "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-node-resolve": "^5.0.1"
+    "rollup-plugin-node-resolve": "^5.0.1",
+    "rollup-plugin-flow-entry": "^0.3.1"
   },
   "version": "2.4.0",
   "description": "An alarmingly simple test running.",

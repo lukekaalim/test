@@ -9,7 +9,7 @@ type Assertion = {
 type Expectation = {
   description: string,
   test: () => Promise<Array<Assertion>>,
-}
+};
 */
 
 const createAssertion = (
@@ -22,18 +22,11 @@ const createAssertion = (
 
 const createExpectation = (
   description/*: string*/,
-  testExpectation/*: () => Promise<Array<Assertion>>*/,
-)/*: Expectation*/ => {
-  const test = async () => {
-    const assertions = await testExpectation();
-    return assertions;
-  };
-
-  return {
-    description,
-    test,
-  };
-};
+  test/*: () => Promise<Array<Assertion>>*/,
+)/*: Expectation*/ => ({
+  description,
+  test,
+});
 
 const createVideoStatus = (id, progress) => ({
   id,
@@ -65,12 +58,6 @@ const createClient = (api) => {
 
 const expectProgressToEqual = (a, b) => createAssertion('progress are to be equals', a.progress === b.progress);
 const expectIdToEqual = (a, b) => createAssertion('id are to be equals', a.id === b.id);
-const invertPromise = async (promise) => await new Promise((resolve, reject) => {
-  console.log(promise);
-  promise.catch(err => console.log('CAUGHT PROMISE') || resolve(err));
-  promise.then(() => console.log('WHY THEN'));
-  console.log('CATCH IS IN PLACE');
-});
 
 const clientResovlesWithStatus = createExpectation('getVideoStatus() to give a Video Status from the specified episode', async () => {
   const apiVideoStatus = createVideoStatus('123', '10000');
