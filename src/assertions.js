@@ -1,3 +1,4 @@
+// @flow strict
 import { createAssertion } from './lib';
 
 const equal = (a, b) => createAssertion('equal', a === b ? 'pass' : 'fail', a === b ? `${a} === ${b}` : `${a} === ${b}`);

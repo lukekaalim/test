@@ -1,11 +1,27 @@
-const createAssertion = (name, result, message) => {
+// @flow strict
+
+/*::
+export type Assertion = {
+  actualAssertion: string,
+  isValid: boolean,
+};
+
+export type Expectation = {
+  expectedAssertion: string,
+  test: () => Promise<Array<Assertion>>,
+};
+*/
+
+const createTest = (
+  expectation/*: string*/,
+  run/*: () => Promise<Array<Test>>*/
+) => {
   return {
-    name,
-    result,
-    message,
+    run,
   }
 };
-const createTestResult = (name, assertions, duration) => {
+
+const createTestResult = (name/*: string*/, assertions, duration) => {
   return {
     name,
     assertions,
@@ -13,7 +29,7 @@ const createTestResult = (name, assertions, duration) => {
   };
 };
 
-const createTest = (name, testFunction) => {
+const createTest = (name/*: string*/, testFunction) => {
   const run = async () => {
     const startTime = Date.now();
     try {

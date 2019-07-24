@@ -86,6 +86,11 @@ rollup-plugin-commonjs@^10.0.0:
     resolve "^1.10.1"
     rollup-pluginutils "^2.7.0"
 
+rollup-plugin-flow-entry@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-flow-entry/-/rollup-plugin-flow-entry-0.3.1.tgz#59c6faf4a2eb69bb478ace53055aaa37e53ff54c"
+  integrity sha512-CCih1+GDYWm5axQEwmZrMCz0ez7rBgT8QLcnLw0sn2N+MBchRBCTSfNDvtCbOCQGZoxi1jbgaddsYqSMMAuMqA==
+
 rollup-plugin-node-resolve@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-5.0.1.tgz#4619eafdf2ecb4e8ed24177ba47d7f11f027d38b"

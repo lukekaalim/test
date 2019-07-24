@@ -3,7 +3,8 @@
   "main": "dist/lk-test.cjs.js",
   "module": "dist/lk-test.esm.js",
   "dependencies": {
-    "colors-cli": "^1.0.23"
+    "colors-cli": "^1.0.23",
+    "rollup-plugin-flow-entry": "^0.3.1"
   },
   "scripts": {
     "test": "node -r esm src/index.test.js"
