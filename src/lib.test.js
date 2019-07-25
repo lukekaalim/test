@@ -1,14 +1,15 @@
-import { createTestSuite, createTest, equal } from '../src';
-import { colorfulReporter } from './reporter';
+// @flow
+const { expectTests, createAssertion } = require('..');
 
-const reporterReportsAString = createTest('reporterReportsAString', () => {
-  return [
-    equal(typeof colorfulReporter([]), 'string'),
-  ];
-});
+const expectAnything = () => createAssertion('Anything was provided', true, []);
+const expectImpossible = () => createAssertion('Impossible was provided', false, []);
 
-const reporterTestSuite = createTestSuite([reporterReportsAString], 'src/reporter.test.js');
-
-export {
-  reporterTestSuite
+const main = async () => {
+  const test = expectTests('To verify that expectTests fails when one child fails', async () => [
+    expectAnything,
+    expectImpossible,
+  ]);
+  console.log(await test());
 };
+
+main();

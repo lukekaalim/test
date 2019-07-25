@@ -11,8 +11,8 @@
   "devDependencies": {
     "rollup": "^1.13.1",
     "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-node-resolve": "^5.0.1",
-    "rollup-plugin-flow-entry": "^0.3.1"
+    "rollup-plugin-flow-entry": "^0.3.1",
+    "rollup-plugin-node-resolve": "^5.0.1"
   },
   "version": "2.4.0",
   "description": "An alarmingly simple test running.",

@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import flow from 'rollup-plugin-flow-entry';
 
 export default {
   input: 'src/index.js',
@@ -13,5 +14,5 @@ export default {
       format: 'esm'
     },
   ],
-  plugins: [resolve(), commonjs()],
+  plugins: [flow(), resolve(), commonjs()],
 };
