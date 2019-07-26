@@ -1,9 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
 import flow from 'rollup-plugin-flow-entry';
+import cleanup from 'rollup-plugin-cleanup';
 
 export default {
   input: 'src/index.js',
+  external: [ 'tiny-ansi-colors' ],
   output: [
     {
       file: 'dist/lk-test.cjs.js',
@@ -14,5 +14,5 @@ export default {
       format: 'esm'
     },
   ],
-  plugins: [flow(), resolve(), commonjs()],
+  plugins: [cleanup(), flow()],
 };

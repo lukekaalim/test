@@ -1,16 +1,46 @@
-import { didTestPass } from './lib';
-import { colorfulReporter } from './reporter';
-import { assertionTestSuite } from './assertions.test';
-import { reporterTestSuite } from './reporter.test';
+// @flow
+const {
+  expectTests,
+  createAssertion,
+  createExpectation
+} = require('..');
 
-const testPackage = async () => {
-  const results = [
-    ...await assertionTestSuite.run(),
-    ...await reporterTestSuite.run(),
-  ];
-  const report = colorfulReporter(results);
-  process.stdout.write(report + '\n');
-  process.exitCode = results.every(didTestPass) ? 0 : 1;
-  console.log(`Exiting with code: ${process.exitCode}`);
-};
-testPackage();
+const expectAnything = createExpectation(() => createAssertion('Anything was provided', true, []));
+const expectImpossible = createExpectation(() => createAssertion('Impossible was provided', false, []));
+
+const expectFailure = (description, expectation) => (
+  createExpectation(async () => createAssertion(
+    description,
+    await expectation.test().then(ass => !ass.validatesExpectation),
+    [],
+  ))
+);
+
+const expectSuccess = (description, expectation) => (
+  createExpectation(async () => createAssertion(
+    description,
+    await expectation.test().then(ass => ass.validatesExpectation),
+    [],
+  ))
+);
+
+const failureTest = expectFailure('To verify that expectTests fails when one child fails',
+  expectTests('To do the impossible', async () => [
+    expectAnything,
+    expectImpossible,
+  ]),
+);
+const successTest = expectSuccess('To verify that expectTests succeed when no child fails',
+  expectTests('To do anything', async () => [
+    expectAnything,
+    expectAnything,
+  ]),
+);
+
+const libraryTests = expectTests('To verify the library can create, suceed, and fail based on assertions', async () => [
+  failureTest,
+  successTest,
+  expectTests('nested', async () => [failureTest, failureTest])
+]);
+
+module.exports.libraryTests = libraryTests;

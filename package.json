@@ -3,13 +3,14 @@
   "main": "dist/lk-test.cjs.js",
   "module": "dist/lk-test.esm.js",
   "dependencies": {
-    "colors-cli": "^1.0.23"
+    "tiny-ansi-colors": "0.0.4"
   },
   "scripts": {
     "test": "node test.js"
   },
   "devDependencies": {
     "rollup": "^1.13.1",
+    "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-flow-entry": "^0.3.1",
     "rollup-plugin-node-resolve": "^5.0.1"
