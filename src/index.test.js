@@ -1,15 +1,11 @@
 // @flow
-const {
-  expectTests,
-  createAssertion,
-  createExpectation
-} = require('..');
+const { test, assert, expect } = require('..');
 
-const expectAnything = createExpectation(() => createAssertion('Anything was provided', true, []));
-const expectImpossible = createExpectation(() => createAssertion('Impossible was provided', false, []));
+const expectAnything = expect(() => assert('Anything was provided', true, []));
+const expectImpossible = expect(() => assert('Impossible was provided', false, []));
 
 const expectFailure = (description, expectation) => (
-  createExpectation(async () => createAssertion(
+  expect(async () => assert(
     description,
     await expectation.test().then(ass => !ass.validatesExpectation),
     [],
@@ -17,30 +13,26 @@ const expectFailure = (description, expectation) => (
 );
 
 const expectSuccess = (description, expectation) => (
-  createExpectation(async () => createAssertion(
+  expect(async () => assert(
     description,
     await expectation.test().then(ass => ass.validatesExpectation),
     [],
   ))
 );
 
-const failureTest = expectFailure('To verify that expectTests fails when one child fails',
-  expectTests('To do the impossible', async () => [
-    expectAnything,
-    expectImpossible,
-  ]),
-);
-const successTest = expectSuccess('To verify that expectTests succeed when no child fails',
-  expectTests('To do anything', async () => [
-    expectAnything,
-    expectAnything,
-  ]),
-);
-
-const libraryTests = expectTests('To verify the library can create, suceed, and fail based on assertions', async () => [
-  failureTest,
-  successTest,
-  expectTests('nested', async () => [failureTest, failureTest])
+const libraryTests = test('To verify the library can create, suceed, and fail based on assertions', async () => [
+  expectFailure('To verify that expectTests fails when one child fails',
+    test('To do the impossible', async () => [
+      expectAnything,
+      expectImpossible,
+    ]),
+  ),
+  expectSuccess('To verify that expectTests succeed when no child fails',
+    test('To do anything', async () => [
+      expectAnything,
+      expectAnything,
+    ]),
+  )
 ]);
 
 module.exports.libraryTests = libraryTests;

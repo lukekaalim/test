@@ -19,6 +19,7 @@ export const createAssertion = (
   validatesExpectation,
   childAssertions,
 });
+export const assert = createAssertion;
 
 export const createExpectation = (
   verififyExpectation/*: () => Assertion | Promise<Assertion>*/
@@ -31,6 +32,7 @@ export const createExpectation = (
     test,
   };
 };
+export const expect = createExpectation;
 
 export const expectTrue = (
   description/*: string*/,
@@ -53,5 +55,6 @@ export const expectTests = (
     childAssertions,
   );
 });
+export const test = expectTests;
 
 export * from './reporter';
