@@ -1,3 +1,60 @@
-export { createTest, createTestSuite, didTestPass } from './lib';
-export { colorfulReporter } from './reporter';
-export { equal, notEqual, ok, throws, safe, not } from './assertions';
+// @flow strict
+
+/*::
+export type Assertion = {
+  description: string,
+  validatesExpectation: boolean,
+  childAssertions: Array<Assertion>,
+};
+
+export type Expectation = { test: () => Promise<Assertion> };
+*/
+
+export const createAssertion = (
+  description/*: string*/,
+  validatesExpectation/*: boolean*/,
+  childAssertions/*: Array<Assertion>*/ = [],
+)/*: Assertion*/ => ({
+  description,
+  validatesExpectation,
+  childAssertions,
+});
+export const assert = createAssertion;
+
+export const createExpectation = (
+  verififyExpectation/*: () => Assertion | Promise<Assertion>*/
+)/*: Expectation*/ => {
+  const test = async ()/*: Promise<Assertion>*/ => {
+    return verififyExpectation();
+  };
+
+  return {
+    test,
+  };
+};
+export const expect = createExpectation;
+
+export const expectTrue = (
+  description/*: string*/,
+  valueToBeTruthy/*: boolean*/,
+) => createExpectation(() => createAssertion(description, valueToBeTruthy, []));
+
+export const expectTests = (
+  description/*: string*/,
+  getChildExpectations/*: () => Promise<Array<Expectation>>*/,
+) => createExpectation(async () => {
+  const childExpectations = await getChildExpectations();
+  const childTestPromises/*: Array<Promise<Assertion>> */ = childExpectations.map(ex => ex.test());
+  const childAssertions/*: Array<Assertion> */ = await Promise.all(childTestPromises);
+
+  const validatesExpectation = childAssertions.every(assertion => assertion.validatesExpectation);
+
+  return createAssertion(
+    description,
+    validatesExpectation,
+    childAssertions,
+  );
+});
+export const test = expectTests;
+
+export * from './reporter';

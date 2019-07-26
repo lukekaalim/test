@@ -1,31 +1,37 @@
-import colors from 'colors-cli';
-import { didTestPass } from './lib';
+// @flow strict
+import { colors } from 'tiny-ansi-colors';
+/*::
+import type { Assertion } from '../src';
+*/
 
-const { blue, yellow, red, green } = colors;
-
-const colorfulReporter = (testResults) => {
-  const output = [];
-  output.push(blue(`Ran ${testResults.length} tests`));
-  for (const result of testResults) {
-    const testPassed = didTestPass(result);
-    if (testPassed) {
-      output.push(green(`Pass | ${result.name} (${result.duration}ms)`));
-    } else {
-      output.push(red(`Fail | ${result.name} (${result.duration}ms)`));
-      for (const failedAssertion of result.assertions.filter(assertion => assertion.result === 'fail')) {
-        output.push(yellow(`  ${failedAssertion.name}: ${failedAssertion.message}`));
-      }
-    }
+const colorReporter = (assertion/*: Assertion*/) => {
+  if (assertion.validatesExpectation) {
+    return colors(assertion.description, { color: 'black', background: 'green' });
   }
-  const allTestsPassed = testResults.every(didTestPass)
-  if (allTestsPassed) {
-    output.push(green(`All tests passed!`));
-  } else {
-    output.push(yellow(`${testResults.filter(result => !didTestPass(result)).length} tests failed`));
-  }
-  return output.join('\n');
+  return colors(assertion.description, { color: 'white', background: 'red' });
 };
 
+const strMult = (text, multiplier) => {
+  let result = '';
+  for (let i = 0; i < multiplier; i++) {
+    result += text;
+  }
+  return result;
+};
+
+const recursiveColorReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0)/*: string*/ => {
+  const mainLine = colorReporter(assertion);
+  const childLines = assertion.childAssertions
+    .map(assertion => recursiveColorReporter(assertion, nestingLevel + 1))
+    .map(report => strMult(' ', nestingLevel + 1) + report);
+  return [
+    mainLine,
+    ...childLines,
+  ].join('\n');
+}
+
+
 export {
-  colorfulReporter
+  colorReporter,
+  recursiveColorReporter
 };

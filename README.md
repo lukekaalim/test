@@ -1,15 +1,14 @@
 # `lk-test`
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
+[![CircleCI](https://circleci.com/gh/lukekaalim/lk-test.svg?style=svg)](https://circleci.com/gh/lukekaalim/lk-test)
+
 [Documentation.md](/docs.md)
 
 ## Why
 - I like things that aren't complex.
 - I starting node programs by running something like `node src/basicMath.test.js` instead of special commands.
-- I think tests should just be node programs.
 - I don't like messing with globals or weird execution state tracking.
-- I like my tests _really_ fast (order of two or three digit milliseconds), and I don't mind if I have to do a bit of code setup to make them do that.
-- I like javascript modules.
 - I like not having a lot of dependencies.
 
 ## Installation
