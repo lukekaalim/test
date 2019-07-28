@@ -37,7 +37,27 @@ export const expect = createExpectation;
 export const expectTrue = (
   description/*: string*/,
   valueToBeTruthy/*: boolean*/,
-) => createExpectation(() => createAssertion(description, valueToBeTruthy, []));
+) => createExpectation(() => createAssertion(
+  valueToBeTruthy ? description : description + ' (was not true)',
+  valueToBeTruthy,
+  [],
+));
+
+export const expectToThrowError = /*:: <T: typeof Error>*/(
+  description/*: string*/,
+  funcToThrowError/*: () => mixed*/,
+  errorToCatch/*:: ?: T*/,
+) => expect(() => {
+  try {
+    funcToThrowError();
+    return assert(description + ' (Did not throw error)', false);
+  } catch (error) {
+    if ((error/*: Error*/) instanceof (errorToCatch || Error)) {
+      return assert(description, true);
+    }
+    return assert(description + ' (Threw an different error than expected)', false);
+  }
+});
 
 export const expectTests = (
   description/*: string*/,
