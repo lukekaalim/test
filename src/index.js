@@ -22,10 +22,10 @@ export const createAssertion = (
 export const assert = createAssertion;
 
 export const createExpectation = (
-  verififyExpectation/*: () => Assertion | Promise<Assertion>*/
+  verifyExpectation/*: () => Assertion | Promise<Assertion>*/
 )/*: Expectation*/ => {
   const test = async ()/*: Promise<Assertion>*/ => {
-    return verififyExpectation();
+    return verifyExpectation();
   };
 
   return {
@@ -59,12 +59,11 @@ export const expectToThrowError = /*:: <T: typeof Error>*/(
   }
 });
 
-export const expectTests = (
+export const expectAll = (
   description/*: string*/,
-  getChildExpectations/*: () => Promise<Array<Expectation>>*/,
+  children/*: Array<Expectation>*/,
 ) => createExpectation(async () => {
-  const childExpectations = await getChildExpectations();
-  const childTestPromises/*: Array<Promise<Assertion>> */ = childExpectations.map(ex => ex.test());
+  const childTestPromises/*: Array<Promise<Assertion>> */ = children.map(ex => ex.test());
   const childAssertions/*: Array<Assertion> */ = await Promise.all(childTestPromises);
 
   const validatesExpectation = childAssertions.every(assertion => assertion.validatesExpectation);
@@ -75,6 +74,15 @@ export const expectTests = (
     childAssertions,
   );
 });
-export const test = expectTests;
+
+export const expectEventuallyAll = (
+  description/*: string*/,
+  children/*: () => Promise<Array<Expectation>>*/,
+) => createExpectation(async () => {
+  const expectation = expectAll(description, await children());
+  return expectation.test();
+});
+
+export const test = expectEventuallyAll;
 
 export * from './reporter';
