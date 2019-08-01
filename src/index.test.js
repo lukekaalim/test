@@ -20,6 +20,12 @@ const expectSuccess = (description, expectation) => (
   ))
 );
 
+const expectThrowsToFail = () => (
+  expectFailure('Expected an uncaught error thrown during an expectation to fail',
+    expect(() => { throw new Error('Uncaught Error'); })
+  )
+);
+
 const libraryTests = expectAll('To verify the library can create, succeed, and fail based on assertions', [
   expectFailure('To verify that expectTests fails when one child fails',
   expectAll('To do the impossible', [
@@ -32,7 +38,8 @@ const libraryTests = expectAll('To verify the library can create, succeed, and f
       expectAnything,
       expectAnything,
     ]),
-  )
+  ),
+  expectThrowsToFail(),
 ]);
 
 module.exports.libraryTests = libraryTests;

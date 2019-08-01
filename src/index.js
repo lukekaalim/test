@@ -25,7 +25,12 @@ export const createExpectation = (
   verifyExpectation/*: () => Assertion | Promise<Assertion>*/
 )/*: Expectation*/ => {
   const test = async ()/*: Promise<Assertion>*/ => {
-    return verifyExpectation();
+    try {
+      return await verifyExpectation();
+    } catch (err) {
+      const error = (err/*: Error*/)
+      return createAssertion(error.message, false);
+    }
   };
 
   return {
