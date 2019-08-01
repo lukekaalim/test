@@ -1,5 +1,5 @@
-// @flow
-const { test, assert, expect } = require('..');
+// @flow strict
+const { expectAll, assert, expect } = require('..');
 
 const expectAnything = expect(() => assert('Anything was provided', true, []));
 const expectImpossible = expect(() => assert('Impossible was provided', false, []));
@@ -20,15 +20,15 @@ const expectSuccess = (description, expectation) => (
   ))
 );
 
-const libraryTests = test('To verify the library can create, suceed, and fail based on assertions', async () => [
+const libraryTests = expectAll('To verify the library can create, succeed, and fail based on assertions', [
   expectFailure('To verify that expectTests fails when one child fails',
-    test('To do the impossible', async () => [
+  expectAll('To do the impossible', [
       expectAnything,
       expectImpossible,
     ]),
   ),
   expectSuccess('To verify that expectTests succeed when no child fails',
-    test('To do anything', async () => [
+  expectAll('To do anything', [
       expectAnything,
       expectAnything,
     ]),

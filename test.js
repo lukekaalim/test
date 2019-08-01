@@ -1,9 +1,10 @@
 // @flow
-const { recursiveColorReporter } = require('./');
+const { recursiveColorReporter, expectAll } = require('./');
 const { libraryTests } = require('./src/index.test');
+const { asyncTest } = require('./src/async.test');
 
 const testPackage = async () => {
-  const assertion = await libraryTests.test();
+  const assertion = await expectAll('lk-test', [libraryTests, asyncTest]).test();
   const report = recursiveColorReporter(assertion);
   process.stdout.write(report + '\n');
   process.exitCode = assertion.validatesExpectation ? 0 : 1;
