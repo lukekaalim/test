@@ -41,15 +41,17 @@ jobs:
           command: npm publish
 workflows:
   version: 2
-  on-commit:
+  commit:
     jobs:
-      - test:
-  on-version:
+      - test
+  version:
     jobs:
-      - test:
+      - test
       - deploy:
         requires:
           - test
         filters:
+          branches:
+            only: master
           tags:
             only: /^v.*/
