@@ -36,7 +36,10 @@ workflows:
   version: 2
   commit:
     jobs:
-      - test
+      - test:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test
