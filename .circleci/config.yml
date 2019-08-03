@@ -36,7 +36,7 @@ jobs:
       - run:
           name: Publish package
           command: |
-            echo $NPM_PUBLISH_TOKEN
+            echo npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
             npm set //registry.npmjs.org/:_authToken=$NPM_PUBLISH_TOKEN
             npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
 workflows:
