@@ -45,10 +45,10 @@ workflows:
     jobs:
       - test
       - deploy:
-        requires:
-          - test
-        filters:
-          branches:
-            only: master
-          tags:
-            only: /^v.*/
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^v.*/
