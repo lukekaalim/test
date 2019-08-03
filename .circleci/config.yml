@@ -43,10 +43,10 @@ workflows:
   version: 2
   on-commit:
     jobs:
-      - test
+      - test:
   on-version:
     jobs:
-      - test
+      - test:
       - deploy:
         requires:
           - test
