@@ -44,9 +44,6 @@ workflows:
   commit:
     jobs:
       - test
-  version:
-    jobs:
-      - test
       - deploy:
         requires:
           - test
