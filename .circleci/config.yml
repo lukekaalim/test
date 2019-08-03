@@ -22,22 +22,15 @@ jobs:
           key: modules-{{ checksum "package.json" }}
 
       - run: node test
-
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
   deploy:
     working_directory: ~/repo
     docker:
       - image: circleci/node:12
     steps:
-      - attach_workspace:
-          at: ~/repo
+      - checkout
       - run:
           name: Publish package
           command: |
-            echo npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
-            npm set //registry.npmjs.org/:_authToken=$NPM_PUBLISH_TOKEN
             npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
 workflows:
   version: 2
