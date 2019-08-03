@@ -35,7 +35,9 @@ jobs:
           at: ~/repo
       - run:
           name: Publish package
-          command: npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_PUBLISH_TOKEN
+            npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
 workflows:
   version: 2
   commit:
@@ -45,7 +47,5 @@ workflows:
           requires:
             - test
           filters:
-            branches:
-              only: master
             tags:
               only: /^v.*/
