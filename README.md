@@ -44,5 +44,10 @@ const testProgram = async () => {
 testProgram();
 ```
 
+## Contributing
+
+### Infra
+Automated builds are provided by CircleCI
+
 ## Authors
 Luke Kaalim (luke@kaal.im)
