@@ -34,11 +34,8 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_PUBLISH_TOKEN" > ~/repo/.npmrc
-      - run:
           name: Publish package
-          command: npm publish
+          command: npm publish -access=public -_authToken=$NPM_PUBLISH_TOKEN
 workflows:
   version: 2
   commit:
