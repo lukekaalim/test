@@ -27,7 +27,6 @@ jobs:
             - v1-dependencies-
 
       - run: npm i
-      - run: make
 
       - save_cache:
           paths:
