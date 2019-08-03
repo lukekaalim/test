@@ -21,3 +21,8 @@ jobs:
           key: modules-{{ checksum "package.json" }}
 
       - run: node test
+workflows:
+  version: 2
+  on-commit:
+    jobs:
+      - test
