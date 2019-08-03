@@ -8,7 +8,6 @@ const expectFailure = (description, expectation) => (
   expect(async () => assert(
     description,
     await expectation.test().then(ass => !ass.validatesExpectation),
-    [],
   ))
 );
 
@@ -16,30 +15,37 @@ const expectSuccess = (description, expectation) => (
   expect(async () => assert(
     description,
     await expectation.test().then(ass => ass.validatesExpectation),
-    [],
   ))
 );
 
-const expectThrowsToFail = () => (
-  expectFailure('Expected an uncaught error thrown during an expectation to fail',
-    expect(() => { throw new Error('Uncaught Error'); })
-  )
-);
+const expectThrowsToFail = expectFailure(
+  'Expected an uncaught error thrown during an expectation to fail',
+  expect(() => { throw new Error('Uncaught Error'); })
+)
 
-const libraryTests = expectAll('To verify the library can create, succeed, and fail based on assertions', [
-  expectFailure('To verify that expectTests fails when one child fails',
-  expectAll('To do the impossible', [
+const expectAllExpectations = expectAll('Expect that "expectAll" correctly creates childAssertions', [
+  expectFailure(
+    'To verify that "expectAll" fails when one child fails',
+    expectAll('To do the impossible', [
       expectAnything,
       expectImpossible,
     ]),
   ),
-  expectSuccess('To verify that expectTests succeed when no child fails',
-  expectAll('To do anything', [
+  expectSuccess(
+    'To verify that "expectAll" succeed when no child fails',
+    expectAll('To do anything', [
       expectAnything,
       expectAnything,
     ]),
   ),
-  expectThrowsToFail(),
 ]);
 
-module.exports.libraryTests = libraryTests;
+const expectationsTest = expectAll('expectations', [
+  expectAllExpectations,
+  expectThrowsToFail,
+]);
+
+
+module.exports = {
+  expectationsTest,
+};
