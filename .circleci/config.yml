@@ -48,5 +48,7 @@ workflows:
           requires:
             - test
           filters:
+            branch:
+              only: master
             tags:
               only: /^v.*/
