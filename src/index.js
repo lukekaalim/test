@@ -2,7 +2,7 @@
 const { assert, createAssertion } = require('./assertion');
 const { expect, createExpectation } = require('./expectation');
 const { expectTrue, expectAll, expectToThrow } = require('./expectations');
-const { colorReporter } = require('./reporters');
+const { colorReporter, booleanReporter } = require('./reporters');
 
 module.exports = {
   // Assertion constructor
@@ -17,4 +17,5 @@ module.exports = {
   expectToThrow,
   // Simple reporters
   colorReporter,
+  booleanReporter,
 };

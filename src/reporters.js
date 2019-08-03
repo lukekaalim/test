@@ -12,6 +12,12 @@ const strMult = (text, multiplier) => {
   return result;
 };
 
+/**
+ * Returns a multi-lined colored string for display in a terminal,
+ * reporting on all childAssertions
+ * @param {Assertion} assertion 
+ * @param {?number} nestingLevel 
+ */
 const colorReporter = (
   { validatesExpectation: valid, description: desc, childAssertions: children }/*: Assertion*/,
   nestingLevel/*: number*/ = 0
@@ -29,6 +35,15 @@ const colorReporter = (
   ].join('\n');
 };
 
+/**
+ * Returns true if the assertion is Valid, or False if is it not
+ * @param {Assertion} assertion 
+ */
+const booleanReporter = (assertion/*: Assertion*/) => {
+  return assertion.validatesExpectation;
+};
+
 module.exports = {
   colorReporter,
+  booleanReporter,
 };

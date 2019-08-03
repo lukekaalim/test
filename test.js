@@ -1,5 +1,5 @@
 // @flow
-const { colorReporter, expectAll } = require('./');
+const { colorReporter, booleanReporter, expectAll } = require('./');
 
 const { expectationsTest } = require('./src/expectations.test');
 
@@ -9,7 +9,7 @@ const testPackage = async () => {
   const report = colorReporter(assertion);
 
   process.stdout.write(report + '\n');
-  process.exitCode = assertion.validatesExpectation ? 0 : 1;
+  process.exitCode = booleanReporter(assertion) ? 0 : 1;
   console.log(`Exiting with code: ${process.exitCode}`);
 };
 
