@@ -5,7 +5,9 @@
     "tiny-ansi-colors": "0.0.4"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "preversion": "npm test",
+    "postversion": "git push --follow tags"
   },
   "version": "4.5.0",
   "description": "An alarmingly simple test tool",
