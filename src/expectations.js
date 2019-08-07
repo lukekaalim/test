@@ -46,8 +46,17 @@ const expectAll = (
   );
 });
 
+const expectEventually = (
+  getExpectation/*: () => Promise<Expectation> | Expectation*/,
+) => expect(async () => {
+  const expectation = await getExpectation();
+  const assertion = await expectation.test();
+  return assertion;
+});
+
 module.exports = {
   expectTrue,
   expectToThrow,
   expectAll,
+  expectEventually,
 };

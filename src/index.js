@@ -1,7 +1,7 @@
 // @flow strict
 const { assert, createAssertion } = require('./assertion');
 const { expect, createExpectation } = require('./expectation');
-const { expectTrue, expectAll, expectToThrow } = require('./expectations');
+const { expectTrue, expectAll, expectToThrow, expectEventually } = require('./expectations');
 const { colorReporter, booleanReporter } = require('./reporters');
 
 module.exports = {
@@ -15,6 +15,7 @@ module.exports = {
   expectTrue,
   expectAll,
   expectToThrow,
+  expectEventually,
   // Simple reporters
   colorReporter,
   booleanReporter,
