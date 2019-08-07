@@ -1,5 +1,5 @@
 // @flow strict
-const { expectAll, assert, expect } = require('..');
+const { expectAll, assert, expect, expectEventually, expectTrue } = require('..');
 
 const expectAnything = expect(() => assert('Anything was provided', true, []));
 const expectImpossible = expect(() => assert('Impossible was provided', false, []));
@@ -40,8 +40,24 @@ const expectAllExpectations = expectAll('Expect that "expectAll" correctly creat
   ),
 ]);
 
+const eventuallyExpectations = expectAll('expectEventually', [
+  expectSuccess('Expect eventually should return the underlying assertion (success)', expectEventually(async () => {
+    const setupNumber = await Promise.resolve(10);
+    return expectTrue('10 + 10 should equal 20', setupNumber + setupNumber === 20);
+  })),
+  expectFailure('Expect eventually should return the underlying assertion (failure)', expectEventually(async () => {
+    const setupNumber = await Promise.resolve(10);
+    return expectTrue('10 + 10 should equal 20', setupNumber + setupNumber === 500);
+  })),
+  expectSuccess('Expect eventually should work with a normal function and not a promise', expectEventually(() => {
+    const setupNumber = 10;
+    return expectTrue('10 + 10 should equal 20', setupNumber + setupNumber === 20);
+  })),
+]);
+
 const expectationsTest = expectAll('expectations', [
   expectAllExpectations,
+  eventuallyExpectations,
   expectThrowsToFail,
 ]);
 

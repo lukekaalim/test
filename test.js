@@ -2,9 +2,10 @@
 const { colorReporter, booleanReporter, expectAll } = require('./');
 
 const { expectationsTest } = require('./src/expectations.test');
+const { indexExpectations } = require('./src/index.test');
 
 const testPackage = async () => {
-  const expectation = expectAll('lk-test', [expectationsTest]);
+  const expectation = expectAll('lk-test', [expectationsTest, indexExpectations]);
   const assertion = await expectation.test();
   const report = colorReporter(assertion);
 
