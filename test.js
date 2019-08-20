@@ -1,5 +1,5 @@
 // @flow
-const { colorReporter, booleanReporter, expectAll } = require('./');
+const { emojiReporter, booleanReporter, expectAll } = require('./');
 
 const { expectationsTest } = require('./src/expectations.test');
 const { indexExpectations } = require('./src/index.test');
@@ -7,7 +7,7 @@ const { indexExpectations } = require('./src/index.test');
 const testPackage = async () => {
   const expectation = expectAll('lk-test', [expectationsTest, indexExpectations]);
   const assertion = await expectation.test();
-  const report = colorReporter(assertion);
+  const report = emojiReporter(assertion);
 
   process.stdout.write(report + '\n');
   process.exitCode = booleanReporter(assertion) ? 0 : 1;
