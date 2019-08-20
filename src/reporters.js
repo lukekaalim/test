@@ -43,7 +43,21 @@ const booleanReporter = (assertion/*: Assertion*/) => {
   return assertion.validatesExpectation;
 };
 
+const emojiReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0) => {
+  const emoji = assertion.validatesExpectation ? '✔️' : '❌';
+  const line = `${emoji} ${assertion.description}`;
+  
+  const childLines = assertion.childAssertions
+    .map(assertion => emojiReporter(assertion, nestingLevel + 1))
+    .map(childLine => strMult(' ', nestingLevel + 1) + childLine);
+  return [
+    line,
+    ...childLines,
+  ].join('\n');
+}
+
 module.exports = {
   colorReporter,
   booleanReporter,
+  emojiReporter,
 };
