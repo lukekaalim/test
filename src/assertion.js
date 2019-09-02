@@ -9,13 +9,22 @@ export type Assertion = {
 
 const createAssertion = (
   description/*: string*/,
-  validatesExpectation/*: boolean*/,
-  childAssertions/*: Array<Assertion>*/ = [],
-)/*: Assertion*/ => ({
-  description,
-  validatesExpectation,
-  childAssertions,
-});
+  isValid/*: boolean | Array<Assertion>*/,
+)/*: Assertion*/ => {
+  if (typeof isValid === 'boolean') {
+    return {
+      description,
+      validatesExpectation: isValid,
+      childAssertions: [],
+    };
+  } else {
+    return {
+      description,
+      validatesExpectation: isValid.every(assertion => assertion.validatesExpectation),
+      childAssertions: isValid,
+    };
+  }
+}
 const assert = createAssertion;
 
 module.exports = {

@@ -1,8 +1,8 @@
 // @flow strict
 const { expectAll, assert, expect, expectEventually, expectTrue } = require('..');
 
-const expectAnything = expect(() => assert('Anything was provided', true, []));
-const expectImpossible = expect(() => assert('Impossible was provided', false, []));
+const expectAnything = expect(() => assert('Anything was provided', true));
+const expectImpossible = expect(() => assert('Impossible was provided', false));
 
 const expectFailure = (description, expectation) => (
   expect(async () => assert(

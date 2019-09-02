@@ -37,11 +37,8 @@ const expectAll = (
   const childTestPromises = children.map(ex => ex.test());
   const childAssertions = await Promise.all(childTestPromises);
 
-  const validatesExpectation = childAssertions.every(assertion => assertion.validatesExpectation);
-
   return assert(
     description,
-    validatesExpectation,
     childAssertions,
   );
 });
