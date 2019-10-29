@@ -1,7 +1,7 @@
 # @lukekaalim/test
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
-[![CircleCI](https://circleci.com/gh/lukekaalim/test.svg?style=svg)](https://circleci.com/gh/lukekaalim/test)
+[![CircleCI](https://img.shields.io/circleci/build/github/lukekaalim/test)](https://circleci.com/gh/lukekaalim/test)
 
 ## Docs
 Available at:
