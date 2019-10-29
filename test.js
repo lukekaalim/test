@@ -1,17 +1,14 @@
 // @flow
-const { emojiReporter, booleanReporter, expectAll } = require('./');
+const { assert, colorReporter, exitCodeReporter } = require('./');
 
-const { expectationsTest } = require('./src/expectations.test');
 const { indexExpectations } = require('./src/index.test');
 
 const testPackage = async () => {
-  const expectation = expectAll('lk-test', [expectationsTest, indexExpectations]);
-  const assertion = await expectation.test();
-  const report = emojiReporter(assertion);
+  const assertion = assert('@lukekaalim/test should provide a simple testing API for verifying expectations', [indexExpectations]);
+  const report = colorReporter(assertion);
 
   process.stdout.write(report + '\n');
-  process.exitCode = booleanReporter(assertion) ? 0 : 1;
-  console.log(`Exiting with code: ${process.exitCode}`);
+  console.log(`Exiting with code: ${exitCodeReporter(assertion)}`);
 };
 
 if (require.main === module) {

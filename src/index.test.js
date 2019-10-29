@@ -1,10 +1,22 @@
 // @flow strict
-const { expectAll, expectTrue } = require('..');
+const { assert } = require('..');
 const indexModule = require('./index');
 
-const indexExpectations = expectAll('Expect index to export the public api', [
-  expectTrue('Expect the assertion constructors to be present', !!indexModule.assert && !!indexModule.createAssertion),
-  expectTrue('Expect the expectation constructors to be present', !!indexModule.expect && !!indexModule.createExpectation),
+const assertEquality = (a, b) => {
+  const aDescription = JSON.stringify(a) || 'The first argument';
+  const bDescription = JSON.stringify(b) || 'The second argument';
+  if (a === b) {
+    return assert(`${aDescription} === ${bDescription}`, true);
+  }
+  return assert(`${aDescription} !== ${bDescription}`, false);
+}
+
+const indexExpectations = assert('Expect index to export the public api', [
+  assert('assert and createAssertion should be exported', [
+    assert('assert is exported', assertEquality(typeof indexModule.assert, 'function')),
+    assert('assert is exported', assertEquality(typeof indexModule.createAssertion, 'function')),
+  ]),
+  assert('Expect the assert to be an alias for createAssertion', assertEquality(indexModule.assert, indexModule.createAssertion)),
 ]);
 
 module.exports = {
