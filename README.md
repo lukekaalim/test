@@ -4,9 +4,9 @@
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
 ## Docs
-Raw API Docs: 
+- Raw API Docs: 
 [/documentation.md](/documentation.md)
-Guides and Testing Patterns:
+- Guides and Testing Patterns:
 [/guides.md](/guides.md)
 
 ## Why
@@ -14,7 +14,7 @@ Guides and Testing Patterns:
 - I like starting node programs by running something like `node src/basicMath.test.js` instead of special commands.
 - I don't like messing with globals or weird execution state tracking.
 - I like not having a lot of dependencies.
-- I like minimalism and tiny API's.
+- I like tiny API's.
 - Current testing tools are less like libraries and more like frameworks; they have a lot of features, and a lot of concerns. I'm a little opinionated, and I like customization.
 - I like fast tests.
 
@@ -54,9 +54,9 @@ npm i -D @lukekaalim/test
 
 ```javascript
 // src/math.test.js
-import { assert, expect } from '@lukekaalim/test';
+import { assert } from '@lukekaalim/test';
 
-export const testMath = () => expect('Math should perform as expected', [
+export const testMath = () => assert('Math should perform as expected', [
   assert('One should equal one', 1 == 1),
   assert('Two should equal two', 2 == 2),
   assert('One plus one should equal two', 1 + 1 == 2),

@@ -1,5 +1,5 @@
 // @flow strict
-const { assert, expect } = require('..');
+const { assert } = require('..');
 const indexModule = require('./index');
 
 const assertEquality = (a, b) => {
@@ -12,16 +12,12 @@ const assertEquality = (a, b) => {
 }
 
 const indexExpectations = () => {
-  return expect('Expect index to export the public api', [
-    expect('tools for assertion should be exported at the top level', [
-      expect('assert is exported', [assertEquality(typeof indexModule.assert, 'function')]),
-      expect('createAssertion is exported', [assertEquality(typeof indexModule.createAssertion, 'function')]),
-
-      expect('expect is exported', [assertEquality(typeof indexModule.expect, 'function')]),
-      expect('createExpectation is exported', [assertEquality(typeof indexModule.createExpectation, 'function')]),
+  return assert('Expect index to export the public api', [
+    assert('tools for assertion should be exported at the top level', [
+      assert('assert is exported', [assertEquality(typeof indexModule.assert, 'function')]),
+      assert('createAssertion is exported', [assertEquality(typeof indexModule.createAssertion, 'function')]),
     ]),
-    expect('Expect the assert to be an alias for createAssertion', [assertEquality(indexModule.assert, indexModule.createAssertion)]),
-    expect('Expect the expect to be an alias for createExpectation', [assertEquality(indexModule.expect, indexModule.createExpectation)]),
+    assert('Expect the assert to be an alias for createAssertion', [assertEquality(indexModule.assert, indexModule.createAssertion)]),
   ]);
 };
 

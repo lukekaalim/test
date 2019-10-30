@@ -13,27 +13,24 @@ export type CreateAssertion = (
 ) => Assertion;
 */
 
-const createAssertion = (expectationDescription/*: string*/, matchedExpectation/*: boolean*/)/*: Assertion*/ => {
-  return ({
-    expectationDescription,
-    matchedExpectation,
-    childAssertions: [],
-  });
-}
-const assert = createAssertion;
-
-const createExpectation = (expectationDescription/*: string*/, childAssertions/*: Assertion[]*/) => {
-  return ({
+const createAssertion = (expectationDescription/*: string*/, matchedExpectation/*: boolean | Assertion[]*/)/*: Assertion*/ => {
+  if (typeof matchedExpectation === 'boolean') {
+    return {
+      expectationDescription,
+      matchedExpectation,
+      childAssertions: [],
+    };
+  }
+  const childAssertions = matchedExpectation;
+  return {
     expectationDescription,
     matchedExpectation: childAssertions.every(assertion => assertion.matchedExpectation),
     childAssertions,
-  });
+  };
 }
-const expect = createExpectation;
+const assert = createAssertion;
 
 module.exports = {
   createAssertion,
   assert,
-  createExpectation,
-  expect,
 };
