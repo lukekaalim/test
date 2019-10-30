@@ -2,7 +2,7 @@
 const { colorReporter } = require('./reporters/colorReporter');
 const { emojiReporter, unicodeReporter } = require('./reporters/emojiReporter');
 /*::
-import type { Assertion } from './assertion';
+import type { Assertion } from './assert';
 */
 
 /**
@@ -10,11 +10,11 @@ import type { Assertion } from './assertion';
  * @param {Assertion} assertion 
  */
 const booleanReporter = (assertion/*: Assertion*/) => {
-  return assertion.validatesExpectation;
+  return assertion.matchedExpectation;
 };
 
 const exitCodeReporter = (assertion/*: Assertion*/) => {
-  if (assertion.validatesExpectation) {
+  if (assertion.matchedExpectation) {
     process.exitCode = 0;
     return 0;
   }

@@ -1,11 +1,13 @@
 // @flow strict
 /*::
-import type { Assertion } from '../assertion';
+import type { Assertion } from '../assert';
 */
 
 /*::
 type ColorReporterConfig = {
   showSource?: boolean,
+  isolateFailure?: boolean,
+  isolateSuccess?: boolean,
 };
 */
 const DEFAULT_CONFIG = {
@@ -34,20 +36,20 @@ const ansiReset = ansiEscape + '[0m';
  * @param {?number} nestingLevel 
  */
 const colorReporter = (
-  { validatesExpectation, description, childAssertions, source }/*: Assertion*/,
+  { matchedExpectation, expectationDescription, childAssertions }/*: Assertion*/,
   nestingLevel/*: number*/ = 0,
   config/*: ColorReporterConfig*/ = DEFAULT_CONFIG,
 ) => {
-  const statusText = validatesExpectation ?
+  const statusText = matchedExpectation ?
     `${ansiBackgroundsGreen + ansiFontBlack} PASS ${ansiReset}` :
     `${ansiBackgroundRed + ansiFontWhite} FAIL ${ansiReset}`;
 
-  const sourceText = config.showSource && source ? [' (', ansiFontGreen, ansiFontUnderline, source, ansiReset, ')'].join('') : '';
-
   return [
-    [statusText, ' ', description, sourceText].join(''),
+    [statusText, ' '.repeat(nestingLevel), ' ', expectationDescription].join(''),
     ...childAssertions
-      .map(assertion => ' '.repeat(nestingLevel + 1) + colorReporter(assertion, nestingLevel + 1))
+      .filter(assertion => config.isolateSuccess ? !matchedExpectation : true)
+      .filter(assertion => config.isolateFailure ? (matchedExpectation ? true : !assertion.matchedExpectation) : true)
+      .map(assertion => colorReporter(assertion, nestingLevel + 1, config))
   ].join('\n');
 };
 
