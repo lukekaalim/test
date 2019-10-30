@@ -1,5 +1,5 @@
 // @flow strict
-const { assert, colorReporter, emojiReporter, exitCodeReporter, unicodeReporter } = require('..');
+const { expect, assert, colorReporter, emojiReporter, exitCodeReporter, unicodeReporter } = require('..');
 
 const assertEquality = (a, b) => {
   const aDescription = JSON.stringify(a) || 'The first argument';
@@ -11,11 +11,11 @@ const assertEquality = (a, b) => {
 }
 
 const expectation = () => {
-  const result = assert('Some Basic Truths', [
+  const result = expect('Some Basic Truths', [
     assert('The world is round', true),
     assert('Mathematics isnt a lie', 1 + 1 === 2),
-    assert('I am the greatest developer', assertEquality('luke', 'greatest')),
-  ], __filename);
+    expect('I am the greatest developer', [assertEquality('luke', 'greatest')]),
+  ]);
   return result;
 };
 
