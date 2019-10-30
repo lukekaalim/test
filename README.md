@@ -1,10 +1,13 @@
 # @lukekaalim/test
+[![CircleCI](https://img.shields.io/circleci/build/github/lukekaalim/test)](https://circleci.com/gh/lukekaalim/test)
+
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
-[![CircleCI](https://img.shields.io/circleci/build/github/lukekaalim/test)](https://circleci.com/gh/lukekaalim/test)
 ## Docs
-Available at:
+Raw API Docs: 
 [/documentation.md](/documentation.md)
+Guides and Testing Patterns:
+[/guides.md](/guides.md)
 
 ## Why
 - I like things that aren't complex.
@@ -40,7 +43,6 @@ This library helps you build _your_ testing program; it is not a complete testin
   - You have to run a separate code coverage tool
 - This library doesn't handle automatic transpilation
   - You have to run your tests though your compiler, or runtime transpiler
-- This library only works with **Node.js**, it does not run in browsers.
 
 ## Installation
 Install with
