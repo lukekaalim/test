@@ -25,7 +25,7 @@ An alarmingly simple test library, made mostly to my tastes and practical needs.
 This library imposes some definitions:
 > A test is a program that is constructed to compare the output of another program with an expected output. A test either asserts **"success"** or **"failure"**, describing whether the output that the other program generated matched the expected output. If the test succeeds, then the program is guaranteed (or _asserted_) to have matched all the expectations.
 
-> An expectation is an action that can be performed to generate an "assertion", which describes if a portion of a programs output matched an predefined rule (or set of rules).
+> An expectation is an action that can be performed to generate an "assertion", which describes if a portion of a programs output matched an predefined rule (or set of rules, which can be recursively expectations themselves).
 
 This library helps you build _your_ testing program; it is not a complete testing program in and of itself. This library helps you generate "assertions" once your write your "expectations", and also provides some helpful reporters which turn those expectations into useful things like CLI graphs, booleans, or process exit codes.
 
