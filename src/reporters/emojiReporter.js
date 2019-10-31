@@ -15,7 +15,7 @@ const emojiReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0) =
   
   const childLines = assertion.childAssertions
     .map(assertion => emojiReporter(assertion, nestingLevel + 1))
-    .map(childLine => ' '.repeat(nestingLevel + 1) + childLine);
+    .map(childLine => '  '.repeat(nestingLevel + 1) + childLine);
 
   return [
     line,
@@ -29,7 +29,7 @@ const unicodeReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0)
   
   const childLines = assertion.childAssertions
     .map(assertion => unicodeReporter(assertion, nestingLevel + 1))
-    .map(childLine => ' '.repeat(nestingLevel + 1) + childLine);
+    .map(childLine => '  '.repeat(nestingLevel + 1) + childLine);
 
   return [
     line,

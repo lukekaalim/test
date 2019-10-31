@@ -4,9 +4,9 @@
 An alarmingly simple test library, made mostly to my tastes and practical needs.
 
 ## Docs
-Raw API Docs: 
+- Raw API Docs: 
 [/documentation.md](/documentation.md)
-Guides and Testing Patterns:
+- Guides and Testing Patterns:
 [/guides.md](/guides.md)
 
 ## Why
@@ -14,7 +14,7 @@ Guides and Testing Patterns:
 - I like starting node programs by running something like `node src/basicMath.test.js` instead of special commands.
 - I don't like messing with globals or weird execution state tracking.
 - I like not having a lot of dependencies.
-- I like minimalism and tiny API's.
+- I like tiny API's.
 - Current testing tools are less like libraries and more like frameworks; they have a lot of features, and a lot of concerns. I'm a little opinionated, and I like customization.
 - I like fast tests.
 
@@ -25,7 +25,7 @@ Guides and Testing Patterns:
 This library imposes some definitions:
 > A test is a program that is constructed to compare the output of another program with an expected output. A test either asserts **"success"** or **"failure"**, describing whether the output that the other program generated matched the expected output. If the test succeeds, then the program is guaranteed (or _asserted_) to have matched all the expectations.
 
-> An expectation is an action that can be performed to generate an "assertion", which describes if a portion of a programs output matched an predefined rule (or set of rules).
+> An expectation is an action that can be performed to generate an "assertion", which describes if a portion of a programs output matched an predefined rule (or set of rules, which can be recursively expectations themselves).
 
 This library helps you build _your_ testing program; it is not a complete testing program in and of itself. This library helps you generate "assertions" once your write your "expectations", and also provides some helpful reporters which turn those expectations into useful things like CLI graphs, booleans, or process exit codes.
 
@@ -54,9 +54,9 @@ npm i -D @lukekaalim/test
 
 ```javascript
 // src/math.test.js
-import { assert, expect } from '@lukekaalim/test';
+import { assert } from '@lukekaalim/test';
 
-export const testMath = () => expect('Math should perform as expected', [
+export const testMath = () => assert('Math should perform as expected', [
   assert('One should equal one', 1 == 1),
   assert('Two should equal two', 2 == 2),
   assert('One plus one should equal two', 1 + 1 == 2),

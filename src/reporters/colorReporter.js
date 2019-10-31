@@ -45,7 +45,7 @@ const colorReporter = (
     `${ansiBackgroundRed + ansiFontWhite} FAIL ${ansiReset}`;
 
   return [
-    [statusText, ' '.repeat(nestingLevel), ' ', expectationDescription].join(''),
+    [statusText, '  '.repeat(nestingLevel), ' ', expectationDescription].join(''),
     ...childAssertions
       .filter(assertion => config.isolateSuccess ? !matchedExpectation : true)
       .filter(assertion => config.isolateFailure ? (matchedExpectation ? true : !assertion.matchedExpectation) : true)

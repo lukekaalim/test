@@ -28,8 +28,20 @@ module.exports = {
 assert(
   'assertion description', // string, description of assertion
   true, // boolean representing whether program output matched assertion
-) // returns an Assertion Object
+) // returns Assertion
 ```
+### `assertion`
+```javascript
+const assertion = {
+  expectationDescription: 'assertion description',// string
+  matchedExpectation: true,// boolean,
+  childAssertions: [], // Assertion[],
+};
+```
+`assertion.childAssertions` is an array of assertions that this assertion 'depends' on to be valid.
+
+`assertion.matchedExpectation` is a boolean, representing whether the assertion was correct. For assertions created by passing an array to `assert()` instead of a boolean, this value is `true` only if every assertion in the array was also true.
+
 
 ### `expect()`, `createExpectation()`
 
