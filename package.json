@@ -7,7 +7,7 @@
     "preversion": "npm test",
     "postversion": "git push --follow-tags"
   },
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "An alarmingly simple test tool",
   "repository": {
     "type": "git",
