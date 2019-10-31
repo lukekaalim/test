@@ -27,7 +27,7 @@ This library imposes some definitions:
 
 > An expectation is an action that can be performed to generate an "assertion", which describes if a portion of a programs output matched an predefined rule (or set of rules, which can be recursively expectations themselves).
 
-This library helps you build _your_ testing program; it is not a complete testing program in and of itself. This library helps you generate "assertions" once your write your "expectations", and also provides some helpful reporters which turn those expectations into useful things like CLI graphs, booleans, or process exit codes.
+This library helps you build _your_ testing program; it is not a complete testing program in and of itself. This library helps you generate "assertions" once you write your "expectations", and also provides some helpful reporters which turn those expectations into useful things like CLI graphs, booleans, or process exit codes.
 
 ## Anti-Pitch
 
