@@ -32,17 +32,22 @@ This library helps you build _your_ testing program; it is not a complete testin
 ## Anti-Pitch
 
 - This library does not isolate tests
-  - All tests run simultaneously, in no guaranteed order.
+  - All tests run simultaneously, in no guaranteed order
   - There is no protections from globals, singleton, or "require cache" state.
-  - Tests can interact with each other if you're not careful
-  - A particularly bad test can crash the test runner without a useful warning
+  - There no automatic protection from tests interacting with each other
+  - A uncaught exception in your tests will not be automatically caught; your tests are expected to handle thrown errors
 - This library doesn't have an easy to use CLI (it doesn't have a CLI at all)
+  - You have to create and manage your test runner yourself
 - This library doesn't handle things automatically
   - You have to create boilerplate to import and run your tests
   - You have to create boilerplate to start and report on your tests
   - You have to run a separate code coverage tool
 - This library doesn't handle automatic transpilation
   - You have to run your tests though your compiler, or runtime transpiler
+- This library simply _cant_ test a lot of things automatically
+  - You may need to refactor your code to be simpler and more contained to use this library easier
+  - You may need to utilise different coding strategies to expose more observable effects for the library
+- This library doesn't offer automatic startup or teardown hooks for your test
 
 ## Installation
 Install with
