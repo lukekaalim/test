@@ -1,6 +1,6 @@
 // @flow strict
-const { assert } = require('..');
-const indexModule = require('./index');
+import { assert } from './index.js';
+import * as indexModule from './index.js';
 
 const assertEquality = (a, b) => {
   const aDescription = JSON.stringify(a) || JSON.stringify(typeof a);
@@ -21,6 +21,6 @@ const indexExpectations = () => {
   ]);
 };
 
-module.exports = {
+export {
   indexExpectations,
 };

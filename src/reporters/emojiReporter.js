@@ -37,7 +37,7 @@ const unicodeReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0)
   ].join('\n');
 }
 
-module.exports = {
+export {
   emojiReporter,
   unicodeReporter,
 }
