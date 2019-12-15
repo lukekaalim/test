@@ -1,6 +1,4 @@
 // @flow strict
 
-module.exports = {
-  ...require('./assert'),
-  ...require('./reporters'),
-};
+export * from './assert.js';
+export * from './reporters.js';

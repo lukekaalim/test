@@ -1,7 +1,6 @@
 // @flow
-const { assert, colorReporter, exitCodeReporter } = require('./');
-
-const { indexExpectations } = require('./src/index.test');
+import { assert, colorReporter, exitCodeReporter } from './src/index.js';
+import { indexExpectations } from './src/index.test.js';
 
 const testPackage = async () => {
   const assertion = assert('@lukekaalim/test should provide a simple testing API for verifying expectations', [indexExpectations()]);
@@ -11,6 +10,4 @@ const testPackage = async () => {
   console.log(`Exiting with code: ${exitCodeReporter(assertion)}`);
 };
 
-if (require.main === module) {
-  testPackage();
-}
+testPackage();

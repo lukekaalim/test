@@ -2,6 +2,7 @@
   "name": "@lukekaalim/test",
   "main": "src/index.js",
   "types": "src/index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "node test.js",
     "preversion": "npm test",

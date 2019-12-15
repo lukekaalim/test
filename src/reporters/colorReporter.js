@@ -53,6 +53,6 @@ const colorReporter = (
   ].join('\n');
 };
 
-module.exports = {
+export {
   colorReporter
 };

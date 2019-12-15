@@ -27,7 +27,7 @@ const createAssertion = (
 }
 const assert = createAssertion;
 
-module.exports = {
+export {
   createAssertion,
   assert,
 };

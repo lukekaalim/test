@@ -1,6 +1,6 @@
 // @flow strict
-const { colorReporter } = require('./reporters/colorReporter');
-const { emojiReporter, unicodeReporter } = require('./reporters/emojiReporter');
+import { colorReporter } from './reporters/colorReporter.js';
+import { emojiReporter, unicodeReporter } from './reporters/emojiReporter.js';
 /*::
 import type { Assertion } from './assert';
 */
@@ -26,7 +26,7 @@ const tapReporter = (assertion/*: Assertion*/) => {
 
 };
 
-module.exports = {
+export {
   colorReporter,
   booleanReporter,
   emojiReporter,
