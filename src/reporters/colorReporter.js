@@ -39,7 +39,7 @@ const colorReporter = (
   { matchedExpectation, expectationDescription, childAssertions }/*: Assertion*/,
   nestingLevel/*: number*/ = 0,
   config/*: ColorReporterConfig*/ = DEFAULT_CONFIG,
-) => {
+)/*: string*/ => {
   const statusText = matchedExpectation ?
     `${ansiBackgroundsGreen + ansiFontBlack} PASS ${ansiReset}` :
     `${ansiBackgroundRed + ansiFontWhite} FAIL ${ansiReset}`;
