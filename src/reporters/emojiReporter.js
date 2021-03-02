@@ -9,7 +9,7 @@ const emojiFail = '❌';
 const unicodePass = '✓';
 const unicodeFail = '×';
 
-const emojiReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0) => {
+const emojiReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0)/*: string*/ => {
   const emoji = assertion.matchedExpectation ? emojiPass : emojiFail;
   const line = `${emoji} ${assertion.expectationDescription}`;
   
@@ -23,7 +23,7 @@ const emojiReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0) =
   ].join('\n');
 }
 
-const unicodeReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0) => {
+const unicodeReporter = (assertion/*: Assertion*/, nestingLevel/*: number*/ = 0)/*: string*/ => {
   const emoji = assertion.matchedExpectation ? unicodePass : unicodeFail;
   const line = `${emoji} ${assertion.expectationDescription}`;
   

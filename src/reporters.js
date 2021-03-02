@@ -9,11 +9,11 @@ import type { Assertion } from './assert';
  * Returns true if the assertion is Valid, or False if is it not
  * @param {Assertion} assertion 
  */
-const booleanReporter = (assertion/*: Assertion*/) => {
+const booleanReporter = (assertion/*: Assertion*/)/*: boolean*/ => {
   return assertion.matchedExpectation;
 };
 
-const exitCodeReporter = (assertion/*: Assertion*/) => {
+const exitCodeReporter = (assertion/*: Assertion*/)/*: number*/ => {
   if (assertion.matchedExpectation) {
     process.exitCode = 0;
     return 0;
@@ -22,15 +22,10 @@ const exitCodeReporter = (assertion/*: Assertion*/) => {
   return 1;
 }
 
-const tapReporter = (assertion/*: Assertion*/) => {
-
-};
-
 module.exports = {
   colorReporter,
   booleanReporter,
   emojiReporter,
   unicodeReporter,
   exitCodeReporter,
-  tapReporter,
 };

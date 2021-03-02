@@ -1,4 +1,5 @@
 // @flow strict
+/*:: import type { Assertion } from './assert'; */
 const { assert } = require('..');
 const indexModule = require('./index');
 
@@ -11,7 +12,7 @@ const assertEquality = (a, b) => {
   return assert(`${aDescription} !== ${bDescription}`, false);
 }
 
-const indexExpectations = () => {
+const indexExpectations = ()/*: Assertion*/ => {
   return assert('Expect index to export the public api', [
     assert('tools for assertion should be exported at the top level', [
       assert('assert is exported', [assertEquality(typeof indexModule.assert, 'function')]),
