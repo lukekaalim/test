@@ -8,6 +8,7 @@ type ColorReporterConfig = {
   showSource?: boolean,
   isolateFailure?: boolean,
   isolateSuccess?: boolean,
+  maxDepth?: number,
 };
 */
 const DEFAULT_CONFIG = {
@@ -36,20 +37,25 @@ const ansiReset = ansiEscape + '[0m';
  * @param {?number} nestingLevel 
  */
 const colorReporter = (
-  { matchedExpectation, expectationDescription, childAssertions }/*: Assertion*/,
-  nestingLevel/*: number*/ = 0,
+  { result, title, because }/*: Assertion*/,
+  depth/*: number*/ = 0,
   config/*: ColorReporterConfig*/ = DEFAULT_CONFIG,
 )/*: string*/ => {
-  const statusText = matchedExpectation ?
+  const statusText = result ?
     `${ansiBackgroundsGreen + ansiFontBlack} PASS ${ansiReset}` :
     `${ansiBackgroundRed + ansiFontWhite} FAIL ${ansiReset}`;
+  
+  const line = [statusText, '  '.repeat(depth), ' ', title].join('');
+  const { maxDepth = Number.POSITIVE_INFINITY } = config;
+  if (depth >= maxDepth)
+    return line;
 
   return [
-    [statusText, '  '.repeat(nestingLevel), ' ', expectationDescription].join(''),
-    ...childAssertions
-      .filter(assertion => config.isolateSuccess ? !matchedExpectation : true)
-      .filter(assertion => config.isolateFailure ? (matchedExpectation ? true : !assertion.matchedExpectation) : true)
-      .map(assertion => colorReporter(assertion, nestingLevel + 1, config))
+    line,
+    ...because
+      .filter(assertion => config.isolateSuccess ? !result : true)
+      .filter(assertion => config.isolateFailure ? (result ? true : !assertion.result) : true)
+      .map(assertion => colorReporter(assertion, depth + 1, config))
   ].join('\n');
 };
 

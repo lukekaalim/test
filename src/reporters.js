@@ -10,11 +10,11 @@ import type { Assertion } from './assert';
  * @param {Assertion} assertion 
  */
 const booleanReporter = (assertion/*: Assertion*/)/*: boolean*/ => {
-  return assertion.matchedExpectation;
+  return assertion.result;
 };
 
 const exitCodeReporter = (assertion/*: Assertion*/)/*: number*/ => {
-  if (assertion.matchedExpectation) {
+  if (assertion.result) {
     process.exitCode = 0;
     return 0;
   }
