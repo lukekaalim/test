@@ -24,14 +24,6 @@ const createAssertion = (
 
 const assert = createAssertion;
 
-/*::
-export type ComparableStruct =
-  | $ReadOnlyArray<ComparableStruct>
-  | number | boolean | string
-  | null | void
-  | { +[string]: ComparableStruct }
-*/
-
 const isStructurallyEqual = (a/*: mixed*/, b/*: mixed*/) => {
   if (Object.is(a, b))
     return true;
@@ -48,7 +40,7 @@ const isStructurallyEqual = (a/*: mixed*/, b/*: mixed*/) => {
   return false;
 };
 
-const assertStruct = (structs/*: { [string]: ComparableStruct }*/)/*: Assertion*/ =>
+const assertStruct = (structs/*: { [string]: mixed }*/)/*: Assertion*/ =>
   assert(
     Object.keys(structs).join(' structurally equals '),
     Object.values(structs).every((a, i, r) => isStructurallyEqual(a, r[Math.max(i - 1, 0)]) )
@@ -59,7 +51,6 @@ const assertIs = (values/*: { [string]: mixed }*/)/*: Assertion*/ =>
     Object.keys(values).join(' equals '),
     Object.values(values).every((a, i, r) => Object.is(a, r[Math.max(i - 1, 0)]) )
   )
-
 
 module.exports = {
   createAssertion,
